@@ -6,7 +6,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use App\Notification\Mail;
+use Laravel\Passport\HasApiTokens;
 use Carbon\Carbon;
 
 class User extends Authenticatable
@@ -56,4 +57,8 @@ class User extends Authenticatable
             return Carbon::parse($this->attributes['updated_at'])->format('Y-m-d H:i:s');
         }
     }//convert format updated_at menjadi Y-m-d H:i:s
+
+    public function sendApiEmailVerificationNotification(){
+        $this->notify(new Mail);
+    }
 }
